@@ -35,17 +35,17 @@ class StateSwitchNode(object):
 
     def cbSwitch(self, switch_msg):
         #print switch_msg.data
-        if (switch_msg.data == False) :
+        if (switch_msg.data == True) :
             if (self.switch == "JoyStick") :
                 self.switch = "Prediction"
-                print "Prediction Control"
+                rospy.loginfo('[%s] Prediction Control' %self.node_name)
             elif(self.switch == "Prediction"):
                 self.switch = "JoyStick"
-                print "Joystick Control"
+                rospy.loginfo('[%s]Joystick Control' %(self.node_name))
 
 
     def onShutdown(self):
-        rospy.loginfo("[%s] Closing Control Node." %(self.node_name))
+        rospy.loginfo('[%s] Closing Control Node.' %(self.node_name))
         self.is_shutdown=True
         rospy.loginfo("[%s] Shutdown." %(self.node_name))
 
