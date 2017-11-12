@@ -1,0 +1,19 @@
+<launch>
+	<arg name="veh"/>
+	<arg name="config" default="baseline"/>
+	<arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman"/>
+	<arg name="pkg_name" value="deep_lane_following"/>
+	<arg name="node_name" default="state_switch_node"/>
+
+	<!-- <arg name="raw" default="true" doc="If set to true, also publish raw image using decoder."/>     -->
+    <!--include file="$(find duckietown)/machines"/-->
+
+	<group ns="$(arg veh)">
+		<node name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" output="screen" clear_params="true" required="true">
+		</node>
+	</group>
+
+	<!-- Publications -->
+
+
+</launch>

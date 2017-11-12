@@ -19,16 +19,21 @@ class NcsCaffePredictionNode(object):
 		self.model_name = rospy.get_param('~caffe_model')
 		self.omega_weight = rospy.get_param('~omega_weight')
 		rospy.loginfo('[%s]  caffe model name = %s' %(self.node_name, self.model_name))
-
 		self.model_Base_Dir = '../models/' + self.model_name + '/'
-		self.Initial()
-		#self.test()
-		self.sub_image = rospy.Subscriber("~compressed", CompressedImage, self.cbImage, queue_size=1)
-		self.pub_carcmd = rospy.Publisher("~carcmd", Twist2DStamped, queue_size=1)
+
+		#setup device and parameter
 		self.count = 0
+		self.gain_step = 0
+		self.initial()
+		
+		self.sub_image = rospy.Subscriber("~compressed", CompressedImage, self.cbImage, queue_size=1)
+		self.sub_gain_step = rospy.Subscriber("~gain_step", Float32, self.cbGainStep, queue_size=1)
+
+		self.pub_carcmd = rospy.Publisher("~carcmd", Twist2DStamped, queue_size=1)
+		
 		
 
-	def Initial(self):
+	def initial(self):
 
 		self.device_work = False
 		mvnc.SetGlobalOption(mvnc.GlobalOption.LOG_LEVEL, 2)
@@ -44,18 +49,16 @@ class NcsCaffePredictionNode(object):
 		self.dim = (shape[2], shape[3])
 
 
-
-
 	def deviceCheck(self):
 		#check device is plugged in
 		self.devices = mvnc.EnumerateDevices()
 		if len(self.devices) == 0:
 			self.device_work = False
-			rospy.loginfo('[%s] device not found' %(self.node_name))
+			rospy.loginfo('[%s] NCS device not found' %(self.node_name))
 			
 		else:
 			self.device_work = True
-			rospy.loginfo('[%s] device found' %(self.node_name))
+			rospy.loginfo('[%s] NCS device found' %(self.node_name))
 			self.initialDevice()
 
 	def initialDevice(self):
@@ -74,6 +77,9 @@ class NcsCaffePredictionNode(object):
 			blob = f.read()
 
 		self.graph = self.device.AllocateGraph(blob)
+
+	def cbGainStep(self, msg):
+		self.gain_step = msg.data
 
 	def cbImage(self, msg):
 		#receive img from camera
@@ -109,7 +115,7 @@ class NcsCaffePredictionNode(object):
 		carcmd_msg = Twist2DStamped()
 		carcmd_msg.header = header
 		carcmd_msg.omega = 0
-		carcmd_msg.v = 0.6 
+		carcmd_msg.v = 0.6 + self.gain_step
 
 		for i in range(0, 3):
 			if(order[i]==0): #L

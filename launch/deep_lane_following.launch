@@ -36,6 +36,7 @@
     </include>
 
     #NCS prediction
+    <remap from="ncs_caffe_prediction_node/gain_step" to="deep_joy_mapper_node/gain_step"/> 
     <remap from="ncs_caffe_prediction_node/compressed" to="camera_white_balance_node/image/compressed"/>
     <include file="$(find deep_lane_following)/launch/ncs_caffe_prediction.launch">
     	<arg name="veh" value="$(arg veh)"/>
@@ -47,17 +48,17 @@
 
 
     <!-- control -->
-	<remap from="control_node/prediction_car_cmd" to="ncs_caffe_prediction_node/carcmd"/>
-	<remap from="control_node/joy_car_cmd" to="joy_mapper_node/car_cmd"/>	
-	<remap from="control_node/joystick_override" to="joy_mapper_node/joystick_override"/>
-  	<include file="$(find deep_lane_following)/launch/control.launch">
+	<remap from="state_switch_node/prediction_car_cmd" to="ncs_caffe_prediction_node/carcmd"/>
+	<remap from="state_switch_node/joy_car_cmd" to="deep_joy_mapper_node/car_cmd"/>	
+	<remap from="state_switch_node/joystick_override" to="deep_joy_mapper_node/joystick_override"/>
+  	<include file="$(find deep_lane_following)/launch/state_switch.launch">
     	<arg name="veh" value="$(arg veh)"/>
     	<arg name="config" value="$(arg config)"/>
   	</include>
 
     #car command
     <!-- car_cmd_switch_node -->
-	<remap from="inverse_kinematics_node/car_cmd" to="control_node/car_cmd"/>
+	<remap from="inverse_kinematics_node/car_cmd" to="state_switch_node/car_cmd"/>
     <remap from="inverse_kinematics_node/wheels_cmd" to="wheels_driver_node/wheels_cmd" />
 	<include file="$(find dagu_car)/launch/inverse_kinematics_node.launch">
 		<arg name="veh" value="$(arg veh)"/>
