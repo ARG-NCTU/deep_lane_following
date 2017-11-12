@@ -84,7 +84,7 @@ class NcsCaffePredictionNode(object):
 	def cbImage(self, msg):
 		#receive img from camera
 		self.count += 1
-		if self.device_work == True and self.count == 3:
+		if self.device_work == True and self.count == 4:
 			# Load the image
 			self.count = 0
 			np_arr = np.fromstring(msg.data, np.uint8)
@@ -105,9 +105,9 @@ class NcsCaffePredictionNode(object):
 			output, userobj = self.graph.GetResult()
 
 			order = output.argsort()[::-1][:4]
-			print('\n------- predictions --------')
-			for i in range(0, 3):
-				print ('prediction ' + str(i) + ' (probability ' + str(output[order[i]]*100) + '%) is ' + self.labels[order[i]] + '  label index is: ' + str(order[i]) )
+			#print('\n------- predictions --------')
+			#for i in range(0, 3):
+				#print ('prediction ' + str(i) + ' (probability ' + str(output[order[i]]*100) + '%) is ' + self.labels[order[i]] + '  label index is: ' + str(order[i]) )
 
 			self.tf_pred2cmd(output, order, msg.header)
 
