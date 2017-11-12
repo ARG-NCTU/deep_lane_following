@@ -66,9 +66,11 @@ class JoyMapper(object):
         if (joy_msg.buttons[3] == 1):#speed up 
             self.gain_step += 0.1
             self.pub_gain_step.publish(self.gain_step)
+            rospy.loginfo("increase gain")
         elif (joy_msg.buttons[0] == 1): #speed down
             self.gain_step -= 0.1
             self.pub_gain_step.publish(self.gain_step)
+            rospy.loginfo("reduce gain")
         elif (joy_msg.buttons[7] == 1):
             switch_msg = BoolStamped()
             switch_msg.header = joy_msg.header
