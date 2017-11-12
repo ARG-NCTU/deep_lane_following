@@ -2,7 +2,7 @@
 from duckietown_utils.jpg import image_cv_from_jpg
 from sensor_msgs.msg import Image, CompressedImage, Joy
 from duckietown_msgs.msg import  Twist2DStamped, BoolStamped, WheelsCmdStamped
-from std_msgs.msg import String
+from std_msgs.msg import String, Float32
 import cv2
 import numpy as np
 import rospy
@@ -18,7 +18,7 @@ class NcsCaffePredictionNode(object):
 		self.bridge = CvBridge()
 		self.model_name = rospy.get_param('~caffe_model')
 		self.omega_weight = rospy.get_param('~omega_weight')
-		rospy.loginfo('[%s]  caffe model name = %s' %(self.node_name, self.model_name))
+		rospy.loginfo('[%s] caffe model name = %s' %(self.node_name, self.model_name))
 		self.model_Base_Dir = '../models/' + self.model_name + '/'
 
 		#setup device and parameter
@@ -65,7 +65,7 @@ class NcsCaffePredictionNode(object):
 		# set the blob, label and graph
 		self.device = mvnc.Device(self.devices[0])
 
-		labels_file=self.model_Base_Dir + 'lab_list.txt'
+		labels_file=self.model_Base_Dir + 'label.txt'
 		self.labels = np.loadtxt(labels_file,str,delimiter='\t')
 		
 		self.device.OpenDevice()
@@ -104,12 +104,12 @@ class NcsCaffePredictionNode(object):
 
 			output, userobj = self.graph.GetResult()
 
-			order = output.argsort()[::-1][:7]
+			order = output.argsort()[::-1][:4]
 			#print('\n------- predictions --------')
-			#for i in range(0, 6):
-			#	print ('prediction ' + str(i) + ' (probability ' + str(output[order[i]]*100) + '%) is ' + self.labels[order[i]] + '  label index is: ' + str(order[i]) )
+			#for i in range(0, 3):
+				#print ('prediction ' + str(i) + ' (probability ' + str(output[order[i]]*100) + '%) is ' + self.labels[order[i]] + '  label index is: ' + str(order[i]) )
 
-			self.tf_pred2cmd(output, order, msg.header))
+			self.tf_pred2cmd(output, order, msg.header)
 
 	def tf_pred2cmd(self, output, order, header):
 		carcmd_msg = Twist2DStamped()
@@ -147,9 +147,9 @@ class NcsCaffePredictionNode(object):
 		#cloe divice when shutdown
 		if(self.device_work==True):
 			self.device_work=False
+			rospy.sleep(0.5)
 			self.graph.DeallocateGraph()
 			self.device.CloseDevice()
-		rospy.sleep(0.005)
 
 if __name__ == '__main__':
 	rospy.init_node('ncs_caffe_prediction',anonymous=False)

@@ -4,7 +4,7 @@ import math
 
 from duckietown_msgs.msg import Twist2DStamped, BoolStamped
 from sensor_msgs.msg import Joy
-
+from std_msgs.msg import Float32
 from __builtin__ import True
 
 class JoyMapper(object):
@@ -26,7 +26,6 @@ class JoyMapper(object):
         self.pub_car_cmd = rospy.Publisher("~car_cmd", Twist2DStamped, queue_size=1)
         self.pub_joy_override = rospy.Publisher("~joystick_override", BoolStamped, queue_size=1)
         self.pub_gain_step = rospy.Publisher("~gain_step", Float32, queue_size=1)
-        self.pub_gain = rospy.ServiceProxy("inverse_kinematics_node/set_gain", SetValue)
 
         # Subscriptions
         self.sub_joy_ = rospy.Subscriber("joy", Joy, self.cbJoy, queue_size=1)
