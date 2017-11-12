@@ -41,7 +41,7 @@ class StateSwitchNode(object):
                 rospy.loginfo('[%s] Prediction Control' %self.node_name)
             elif(self.switch == "Prediction"):
                 self.switch = "JoyStick"
-                rospy.loginfo('[%s]Joystick Control' %(self.node_name))
+                rospy.loginfo('[%s] Joystick Control' %(self.node_name))
 
 
     def onShutdown(self):

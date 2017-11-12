@@ -24,8 +24,6 @@ class NcsCaffePredictionNode(object):
 		#setup device and parameter
 		self.count = 0
 		self.gain_step = 0
-		self.batch = 0
-		self.omega = 0
 		self.initial()
 		
 		self.sub_image = rospy.Subscriber("~compressed", CompressedImage, self.cbImage, queue_size=1)
@@ -86,8 +84,7 @@ class NcsCaffePredictionNode(object):
 	def cbImage(self, msg):
 		#receive img from camera
 		self.count += 1
-		if self.device_work == True and self.count == 2:
-			self.batch += 1
+		if self.device_work == True and self.count == 4:
 			# Load the image
 			self.count = 0
 			np_arr = np.fromstring(msg.data, np.uint8)
@@ -129,11 +126,7 @@ class NcsCaffePredictionNode(object):
 				carcmd_msg.omega += self.tf_probs2omega(output[order[i]]) * self.omega_weight[0][1]
 		
 		#print 'omega = ', carcmd_msg.omega
-		self.omega += carcmd_msg.omega
-		if self.batch == 2:
-			self.batch = 0
-			carcmd_msg.omega = self.omega/2.0;
-			self.pub_carcmd.publish(carcmd_msg)
+		self.pub_carcmd.publish(carcmd_msg)
 
 				
 	def tf_probs2omega(self, prob):
