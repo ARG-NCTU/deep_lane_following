@@ -1,0 +1,17 @@
+<launch>
+	<arg name="pkg_name" value="deep_lane_following"/>
+	<arg name="node_name" default="ncs_caffe_prediction_node"/>
+	<arg name="veh" doc="Name of vehicle. ex: megaman"/>
+	<arg name="local" default="false" doc="true for running on laptop. false for running on vehicle."/>
+	<arg name="caffe_model" default="bvlc_trailnet"/>
+	<arg name="config" default="baseline"/>
+	<arg name="param_file_name" default="default"/>
+
+    <group ns="$(arg veh)">       
+        <node  name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" cwd="node" output="screen" clear_params="true" required="true">
+        <rosparam command="load" file="$(find deep_lane_following)/config/$(arg config)/$(arg pkg_name)/$(arg node_name)/$(arg param_file_name).yaml"/>
+        	<param name="caffe_model" value="$(arg caffe_model)"/>
+        </node>
+    </group>
+
+</launch>
