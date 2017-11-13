@@ -3,13 +3,13 @@
 This is the ROS pkg about deep lane following with Neural Compute Stick Caffe. The caffe model is based on one paper about drone navigation to make adjustments to our need. 
  * Reference paper : [XXXX]()
  * System : Raspberry Pi 3
- * [NCS Caffe Support](https://github.com/movidius/ncsdk/blob/master/docs/Caffe.md) - more information about caffe on NCS
+ * NCS Caffe : [NCS Caffe Support](https://github.com/movidius/ncsdk/blob/master/docs/Caffe.md)
 
 ## Prerequisites
 ### Installing
 Install [NCS SDK](https://developer.movidius.com/start) for your Pi 3.</br> 
 Because we just focus on using caffe, you can skip install tensorflow in ncsdk.conf. It can be installed much faster.
-
+Not recommended to rum $ make examples, it will cause a lot of time to make all the examples and get error when install opencv. Only make one or two examples which you need.
 ```
 $ vim ncsdk.conf
 ```
@@ -44,6 +44,10 @@ sudo pip uninstall matplotlib
 sudo apt-get install python3-matplotlib
 ```
 
+## How to use NCS with your own caffemodel
+
+
+
 ## How to run the deep lane following
 ### Hardware
 
@@ -53,5 +57,5 @@ sudo apt-get install python3-matplotlib
 clone this repo to your duckietown's catkin_ws/src/, and then catkin_make.
 After finishing all, run this line.
 ```
-roslaunch deep_lane_following deep_lane_following.launch veh:=your_duckiebot caffe_model:=trailnet
+roslaunch deep_lane_following deep_lane_following.launch veh:=your_duckiebot_name caffe_model:=trailnet
 ```
