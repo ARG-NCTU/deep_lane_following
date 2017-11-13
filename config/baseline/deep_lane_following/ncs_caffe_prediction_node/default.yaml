@@ -1,30 +1,4 @@
-# parameters for gd_text_car_cmd
-# prediction classes index
-classes_index: [3,5,6,7,8,9]
-# prediction classes
-classes_label: [ [L,S,R],
-           [TL,AL,S,AR,TR], 
-           [TL,AL,S,AR,TR,N_L],
-           [L_S,L_R,C_L,C_S,C_R,R_L,R_S],
-           [L_S,L_R,C_L,C_S,C_R,R_L,R_S,N_L],
-           [L_L,L_S,L_R,C_L,C_S,C_R,R_L,R_S,R_R] ]
 # weight of omega
-omega_weight: [ [-1.9,0.0,1.9],
-                [-1.2,0,0,0,1.2],
-                [-1.2,0,0,0,1.2,0],
-                [-1,-0.5,-0.2,0,0.2,0.5,1],
-                [-1,-0.5,-0.2,0,0.2,0.5,1,0],
-                [0,-1,-0.5,-0.2,0,0.2,0.5,1,0] ]        
-# robot like motion table [v, omega, time]
-l: [0,1,0.1]
-s: [0.1,0,0.1]
-r: [0,-1,0.1]
-# robot like motion map
-robot_like_motion_map: [ [l,s,r],
-                         [l,s,s,s,r],
-                         [l,s,s,s,r,n_l],
-                         [l,l,l,s,r,r,r],
-                         [l,l,l,s,r,r,r,n_l],
-                         [n_l,l,l,l,s,r,r,r,n_l] ]
+omega_weight: [ [-1.9,0.0,1.9] ]        
 
 

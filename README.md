@@ -1,15 +1,14 @@
 # Deep Lane Following 
 ## Introduction
 This is the ROS pkg about deep lane following with Neural Compute Stick Caffe. The caffe model is based on one paper about drone navigation to make adjustments to our need. 
- * Reference paper : [XXXX]()
+ * Reference paper : [a machine learning approach to visual perception of forested trails for mobile robots](http://rpg.ifi.uzh.ch/docs/RAL16_Giusti.pdf)
  * System : Raspberry Pi 3
  * NCS Caffe : [NCS Caffe Support](https://github.com/movidius/ncsdk/blob/master/docs/Caffe.md)
 
 ## Prerequisites
 ### Installing
-Install [NCS SDK](https://developer.movidius.com/start) for your Pi 3.</br> 
+1. Install [NCS SDK](https://developer.movidius.com/start) for your Pi 3.</br> 
 Because we just focus on using caffe, you can skip install tensorflow in ncsdk.conf. It can be installed much faster.
-Not recommended to rum $ make examples, it will cause a lot of time to make all the examples and get error when install opencv. Only make one or two examples which you need.
 ```
 $ vim ncsdk.conf
 ```
@@ -23,10 +22,12 @@ CAFFE_USE_CUDA=no
 INSTALL_TENSORFLOW=yes  # change yes to no
 INSTALL_TOOLKIT=yes
 ```
+2. Don't run $ make examples. It cause some proplem when install opencv and tersorflow examples(because we didn't install tensorflow).</br>
+We only need to make the single model we want to test in examples/caffe, therefore follow the example video below.
 
 ### Testing 
 
-[examples video](https://www.youtube.com/watch?v=fESFVNcQVVA) - GoogleNet in NCS caffe, the example starts from 2:00 in the video.
+[example video](https://www.youtube.com/watch?v=fESFVNcQVVA) - GoogleNet in NCS caffe, the example starts from 2:00 in the video.
  
 ### Trobleshooting
 If you get error suck like this when running examples, it is an error caused by matplotlib and X11 forwarding.
@@ -44,14 +45,13 @@ sudo pip uninstall matplotlib
 sudo apt-get install python3-matplotlib
 ```
 
-## How to use NCS with your own caffemodel
-
-
-
 ## How to run the deep lane following
 ### Hardware
+* Pi camera with angle down 30 degrees
 
 ### Environment
+* Yellow and blue line for each 5cm width
+* Turn angle of line segments does not exceed 30 degrees. If you want to make a big turn, please divide into several lines to turn.
 
 ### Software
 clone this repo to your duckietown's catkin_ws/src/, and then catkin_make.
@@ -59,3 +59,14 @@ After finishing all, run this line.
 ```
 roslaunch deep_lane_following deep_lane_following.launch veh:=your_duckiebot_name caffe_model:=trailnet
 ```
+It your car turn too slow, you can modify omega_weight
+```
+vim (your catkin_ws folder)/src/deep_lane_following/config/baseline/deep_lane_following/ncs_caffe_prediction_node/default.yaml
+```
+```
+# weight of omega
+omega_weight: [ [-1.9,0.0,1.9] ]  # first and third parameters in this line
+```
+
+
+## How to use NCS with your own caffemodel
