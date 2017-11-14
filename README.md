@@ -73,7 +73,7 @@ omega_weight: [ [-1.9,0.0,1.9] ]  # first and third parameters in this line
 ## How to use NCS with your own caffemodel
 This part is the instruction about how to use your own caffemodel in your own code. You can create a folder in exampls/caffe. </br>
 We use Trailnet for example
-###1. prepare the file ".caffemodel", ".prototxt", "run.py" and "Makefile"
+### 1. prepare the file ".caffemodel", ".prototxt", "run.py" and "Makefile"
 ```
 mkdir (your NCS examples folder path)/caffe/TrailNet
 mv (your file folder)/trailnet.caffemodel (your NCS examples folder path)/caffe/TrailNet/
@@ -81,13 +81,13 @@ mv (your file folder)/deploy.prototxt (your NCS examples folder path)/caffe/Trai
 cp (your NCS examples folder path)/caffe/GoogLeNet/Makefile (your NCS examples folder path)/caffe/TrailNet/Makefile
 cp (your NCS examples folder path)/caffe/GoogLeNet/run.py (your NCS examples folder path)/caffe/TrailNet/run.py
 ```
-###2. modify Makefile
+### 2. modify Makefile
 ```
 vim (your NCS examples folder path)/caffe/TrailNet/Makefile
 ```
-modify line 11~15, 28~61, 125~128 in original Makefile, please see example_Makefile
+modify line 11-15, 28-61, 125-128 in original Makefile, please see example_Makefile
 
-###3. compile. If it succeeds, it will produce 'graph' and this is what we need to do prediction.
+### 3. compile. If it succeeds, it will produce 'graph' and this is what we need to do prediction.
 ```
 make compile
 ```
