@@ -58,6 +58,8 @@ sudo apt-get install python3-matplotlib
 clone this repo to your duckietown's catkin_ws/src/, and then catkin_make.
 After finishing all, run this line.
 ```
+source environment.sh 
+source set_ros_master.sh your_duckiebot_name
 roslaunch deep_lane_following deep_lane_following.launch veh:=your_duckiebot_name caffe_model:=trailnet
 ```
 It your car turn too slow, you can modify omega_weight
