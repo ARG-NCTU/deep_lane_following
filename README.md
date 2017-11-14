@@ -22,7 +22,7 @@ CAFFE_USE_CUDA=no
 INSTALL_TENSORFLOW=yes  # change yes to no
 INSTALL_TOOLKIT=yes
 ```
-2. Don't run $ make examples. It cause some proplem when install opencv and tersorflow examples(because we didn't install tensorflow).</br>
+2. Don't run $ make examples. It cause some problems when install opencv and tersorflow examples(because we didn't install tensorflow).</br>
 We only need to make the single model we want to test in examples/caffe.
 
 ### Testing 
