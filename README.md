@@ -23,11 +23,12 @@ INSTALL_TENSORFLOW=yes  # change yes to no
 INSTALL_TOOLKIT=yes
 ```
 2. Don't run $ make examples. It cause some proplem when install opencv and tersorflow examples(because we didn't install tensorflow).</br>
-We only need to make the single model we want to test in examples/caffe, therefore follow the example video below.
+We only need to make the single model we want to test in examples/caffe.
 
 ### Testing 
 
 [example video](https://www.youtube.com/watch?v=fESFVNcQVVA) - GoogleNet in NCS caffe, the example starts from 2:00 in the video.
+
  
 ### Trobleshooting
 If you get error suck like this when running examples, it is an error caused by matplotlib and X11 forwarding.
@@ -70,3 +71,23 @@ omega_weight: [ [-1.9,0.0,1.9] ]  # first and third parameters in this line
 
 
 ## How to use NCS with your own caffemodel
+This part is the instruction about how to use your own caffemodel in your own code. You can create a folder in exampls/caffe. </br>
+We use Trailnet for example
+###1. prepare the file ".caffemodel", ".prototxt", "run.py" and "Makefile"
+```
+mkdir (your NCS examples folder path)/caffe/TrailNet
+mv (your file folder)/trailnet.caffemodel (your NCS examples folder path)/caffe/TrailNet/
+mv (your file folder)/deploy.prototxt (your NCS examples folder path)/caffe/TrailNet/
+cp (your NCS examples folder path)/caffe/GoogLeNet/Makefile (your NCS examples folder path)/caffe/TrailNet/Makefile
+cp (your NCS examples folder path)/caffe/GoogLeNet/run.py (your NCS examples folder path)/caffe/TrailNet/run.py
+```
+###2. modify Makefile
+```
+vim (your NCS examples folder path)/caffe/TrailNet/Makefile
+```
+modify line 11~15, 28~61, 125~128 in original Makefile, please see example_Makefile
+
+###3. compile. If it succeeds, it will produce 'graph' and this is what we need to do prediction.
+```
+make compile
+```
