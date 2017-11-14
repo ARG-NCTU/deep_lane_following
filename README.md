@@ -62,7 +62,7 @@ source environment.sh
 source set_ros_master.sh your_duckiebot_name
 roslaunch deep_lane_following deep_lane_following.launch veh:=your_duckiebot_name caffe_model:=trailnet
 ```
-Press "start" on joystick to change "Joystick Control" or "Prediction Control"
+Press "start" on joystick to change "Joystick Control" or "Prediction Control" </br >
 Press "Y" or "A" on joystick to change "increase gain" or "decrease gain"
 
 * It your car turn too slow, you can modify omega_weight
