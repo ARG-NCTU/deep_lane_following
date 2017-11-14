@@ -55,12 +55,15 @@ sudo apt-get install python3-matplotlib
 * Turn angle of line segments does not exceed 30 degrees. If you want to make a big turn, please divide into several lines to turn.
 
 ### Software
-clone this repo to your duckietown's catkin_ws/src/, and then catkin_make.
+* clone this repo to your duckietown's catkin_ws/src/, and then catkin_make.
 After finishing all, run this line.
 ```
 roslaunch deep_lane_following deep_lane_following.launch veh:=your_duckiebot_name caffe_model:=trailnet
 ```
-It your car turn too slow, you can modify omega_weight
+Press "start" on joystick to change "Joystick Control" or "Prediction Control"
+Press "Y" or "A" on joystick to change "increase gain" or "decrease gain"
+
+* It your car turn too slow, you can modify omega_weight
 ```
 vim (your catkin_ws folder)/src/deep_lane_following/config/baseline/deep_lane_following/ncs_caffe_prediction_node/default.yaml
 ```
