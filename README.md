@@ -79,6 +79,7 @@ omega_weight: [ [-1.9,0.0,1.9] ]  # first and third parameters in this line
 This part is the instruction about how to use your own caffemodel in your own code. You can create a folder in exampls/caffe. </br>
 We use Trailnet for example
 ### 1. prepare the file ".caffemodel", ".prototxt", "run.py" and "Makefile"
+Our caffemodel and prototxt are [here]{https://drive.google.com/file/d/1t20Ew4e6JfV_cbh8qry3eujEE1M4_5FR/view?usp=sharing}
 ```
 mkdir (your NCS examples folder path)/caffe/TrailNet
 mv (your file folder)/trailnet.caffemodel (your NCS examples folder path)/caffe/TrailNet/
