@@ -1,4 +1,3 @@
-
 ifneq ($(findstring movidius, $(PYTHONPATH)), movidius)
 	export PYTHONPATH:=/opt/movidius/caffe/python:/opt/movidius/mvnc/python:$(PYTHONPATH)
 endif
@@ -8,10 +7,8 @@ NCPROFILE = mvNCProfile
 NCCHECK   = mvNCCheck
 
 PROTOTXT_FILENAME= deploy.prototxt
-GET_PROTOTXT = wget -P . https://raw.githubusercontent.com/BVLC/caffe/master/models/bvlc_alexnet/${PROTOTXT_FILENAME}
 
-CAFFEMODEL_FILENAME = bvlc_alexnet.caffemodel
-GET_CAFFEMODEL = wget -P . -N http://dl.caffe.berkeleyvision.org/${CAFFEMODEL_FILENAME}
+CAFFEMODEL_FILENAME = trailnet.caffemodel
 
 
 .PHONY: all
@@ -26,38 +23,9 @@ prereqs:
 
 .PHONY: prototxt
 prototxt: prereqs
-	@echo "\nmaking prototxt"
-	@if [ -e ${PROTOTXT_FILENAME} ] ; \
-	then \
-		echo "Prototxt file already exists"; \
-	else \
-		echo "Downloading Prototxt file"; \
-		${GET_PROTOTXT}; \
-		if [ -e ${PROTOTXT_FILENAME} ] ; \
-		then \
-			echo "Adding input shape to prototxt file."; \
-			awk 'NR <2 {print}' < ${PROTOTXT_FILENAME} > temp; cat input_shape.prototxt >> temp; awk 'NR > 7 {print}' < ${PROTOTXT_FILENAME} >> temp; mv temp ${PROTOTXT_FILENAME}; \
-		else \
-			echo "***\nError - Could not download prototxt file. Check network and proxy settings \n***\n"; \
-			exit 1; \
-		fi ; \
-	fi  
 
 .PHONY: caffemodel
 caffemodel: 
-	@echo "\nmaking caffemodel"
-	@if [ -e ${CAFFEMODEL_FILENAME} ] ; \
-	then \
-		echo "caffemodel file already exists"; \
-	else \
-		echo "Downloading caffemodel file"; \
-		${GET_CAFFEMODEL}; \
-		if ! [ -e ${CAFFEMODEL_FILENAME} ] ; \
-		then \
-			echo "***\nError - Could not download caffemodel file. Check network and proxy settings \n***\n"; \
-			exit 1; \
-		fi ; \
-	fi  
 
 .PHONY: profile
 profile: prototxt
@@ -123,8 +91,6 @@ help:
 
 clean_caffe_model:
 	@echo "\nmaking clean_caffe_model"
-	rm -f ${PROTOTXT_FILENAME}
-	rm -f ${CAFFEMODEL_FILENAME}
 
 clean: clean_caffe_model
 	@echo "\nmaking clean"
