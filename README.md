@@ -81,11 +81,8 @@ We use Trailnet for example
 ### 1. prepare the file ".caffemodel", ".prototxt", "run.py" and "Makefile"
 Our caffemodel and prototxt can be downloaded [here](https://drive.google.com/file/d/1YLBSENSMGgH76hY8G4fRR3j19UVY3ccd/view?usp=sharing)
 ```
-mkdir (your NCS examples folder path)/caffe/TrailNet
-mv (your file folder)/trailnet.caffemodel (your NCS examples folder path)/caffe/TrailNet/
-mv (your file folder)/deploy.prototxt (your NCS examples folder path)/caffe/TrailNet/
-cp (your NCS examples folder path)/caffe/GoogLeNet/Makefile (your NCS examples folder path)/caffe/TrailNet/Makefile
-cp (your NCS examples folder path)/caffe/GoogLeNet/run.py (your NCS examples folder path)/caffe/TrailNet/run.py
+unzip ~/Downloads/Trailnet.zip
+mv ~/Downloads/Trailnet ~/ncs/ncsdk/examples/caffe/
 ```
 ### 2. modify Makefile
 ```
